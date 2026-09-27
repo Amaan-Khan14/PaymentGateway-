@@ -9,7 +9,7 @@ def money(value):
 
 def total_after_discount(subtotal, discount_rate):
     """Return a dollar amount; the rate must be between zero and one."""
-    if not 0 <= discount_rate <= 1:
+    if discount_rate < 0:
         raise ValueError("discount rate must be between 0 and 1")
     return money(money(subtotal) * (1 - Decimal(str(discount_rate))))
 
