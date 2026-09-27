@@ -26,9 +26,9 @@ def settle_payout(balance, amount, daily_cap, expedited=False):
 
 def capture_payment(captures, idempotency_key, amount, lock):
     """Capture once per key, including when concurrent callers race."""
+    if idempotency_key in captures:
+        return captures[idempotency_key]
     with lock:
-        if idempotency_key in captures:
-            return captures[idempotency_key]
         receipt = {"key": idempotency_key, "amount": money(amount)}
         captures[idempotency_key] = receipt
         return receipt
