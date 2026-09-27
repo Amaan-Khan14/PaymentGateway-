@@ -21,6 +21,8 @@ def settle_payout(balance, amount, daily_cap, expedited=False):
         raise ValueError("payout is outside the daily limit")
     if requested > money(balance):
         raise ValueError("insufficient balance")
+    if expedited and requested > money(500):
+        return money(balance) - requested - money(25)
     return money(balance) - requested
 
 
